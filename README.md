@@ -1,7 +1,9 @@
 # amprex for Home Assistant
 
-A [HACS](https://hacs.xyz) integration that connects Home Assistant (2026.11.0 or newer) to an
-amprex controller over the controller's own MQTT broker.
+A community integration that connects Home Assistant (2026.11.0 or newer) to an amprex controller
+over the controller's own MQTT broker. It installs from the Home Assistant
+[Marketplace](https://www.home-assistant.io/integrations/marketplace/), which replaced HACS in
+2026.11.
 
 - **State:** system power totals, battery state of charge, the current electricity price,
   service status, and the thermostat (temperatures, targets, holds, away).
@@ -15,12 +17,19 @@ entities appear without a new release of this integration.
 
 ## Install
 
-1. In HACS, add `https://github.com/KSoft-Si/amprex-ha` as a custom repository (type
-   *Integration*) and install **amprex**. Restart Home Assistant.
+1. In Home Assistant, go to **Settings → Marketplace → Add from link** and enter
+   `KSoft-Si/amprex-ha`. Adding a repository from a link needs a GitHub connection; the
+   Marketplace asks for it. Open **amprex** and select **Install**. No restart is needed for a
+   first install.
 2. In the amprex Web UI, open **Settings → Home Assistant** and create a connection. Copy the
    pairing code. It is shown only once.
-3. In Home Assistant, go to **Settings → Devices & services → Add integration → amprex** and
-   paste the pairing code.
+3. The setup dialog opens after the install (or use the button below, or
+   **Settings → Devices & services → Add integration → amprex**). Paste the pairing code.
+
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=amprex)
+
+Updates appear under **Settings → Updates**. After an update, Home Assistant asks for a restart
+through a repair.
 
 If the `amprex-….local` name does not resolve from Home Assistant (common with Home Assistant in
 Docker), also enter the controller's IP address. The connection is still verified against the
@@ -50,6 +59,11 @@ Commands time out after 10 s. If the controller refuses one, Home Assistant show
 (for example `too_early` for feedback given too soon).
 
 ## Development
+
+Releases: bump `version` in `custom_components/amprex/manifest.json` and publish a GitHub release
+whose tag is exactly that version (for example `0.1.0`, no `v`). The Marketplace offers published
+releases only, refuses an integration whose manifest version it cannot load, and reads the minimum
+Home Assistant version from `hacs.json`. Mark test builds as GitHub pre-releases.
 
 The wire contract is defined in the ksoft-ems repository
 (`docs/HOME_ASSISTANT_INTEGRATION.md`, `ksoft_common.ha_contract`). `protocol.py` and

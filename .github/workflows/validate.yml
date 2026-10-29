@@ -18,8 +18,9 @@ jobs:
       - uses: hacs/action@main
         with:
           category: integration
-          # Brands, topics and releases are added before the first release.
-          ignore: brands topics
+          # Repository topics are set on GitHub before submitting to the catalog,
+          # which accepts no ignored checks.
+          ignore: topics
 
   tests:
     runs-on: ubuntu-latest

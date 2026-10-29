@@ -1,13 +1,27 @@
 {
   "domain": "amprex",
   "name": "amprex",
-  "codeowners": ["@AndyTempel"],
+  "categories": [
+    "energy.solar_batteries",
+    "climate.thermostats_heating",
+    "energy.meters_monitoring"
+  ],
+  "codeowners": [
+    "@AndyTempel"
+  ],
   "config_flow": true,
+  "connectivity": [
+    "network"
+  ],
   "documentation": "https://github.com/KSoft-Si/amprex-ha",
   "integration_type": "device",
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/KSoft-Si/amprex-ha/issues",
-  "loggers": ["aiomqtt"],
-  "requirements": ["aiomqtt>=2.3.0,<3"],
+  "loggers": [
+    "aiomqtt"
+  ],
+  "requirements": [
+    "aiomqtt>=2.5.0,<3"
+  ],
   "version": "0.1.0"
 }

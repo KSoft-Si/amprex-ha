@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to amprex",
+        "description": "In the amprex Web UI, open Settings → Home Assistant and create a connection. Paste the pairing code shown there.",
+        "data": {
+          "pairing_code": "Pairing code",
+          "address": "Address (optional)"
+        },
+        "data_description": {
+          "pairing_code": "Shown once when the connection is created or rotated.",
+          "address": "IP address of the controller, if its amprex-….local name does not resolve from Home Assistant. The certificate is still checked against the .local name."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-pair amprex",
+        "description": "amprex refused the stored credential. Rotate the connection in the amprex Web UI and paste the new pairing code.",
+        "data": {
+          "pairing_code": "Pairing code",
+          "address": "Address (optional)"
+        }
+      }
+    },
+    "error": {
+      "invalid_pairing_code": "This is not a valid amprex pairing code.",
+      "cannot_connect": "Could not connect to the controller.",
+      "invalid_auth": "The controller refused the credential. Create or rotate the connection again.",
+      "tls_error": "The controller's certificate does not match the pairing code.",
+      "no_manifest": "Connected, but the controller published no entity list. Check that the integrations service is running.",
+      "unsupported_manifest": "The controller uses a newer format. Update this integration.",
+      "wrong_controller": "This pairing code is for a different controller."
+    },
+    "abort": {
+      "already_configured": "This controller is already configured.",
+      "reauth_successful": "Re-paired successfully."
+    }
+  },
+  "exceptions": {
+    "command_rejected": {
+      "message": "amprex rejected the command ({reason}). {detail}"
+    },
+    "hvac_mode_not_supported": {
+      "message": "Switch comfort control on or off in the amprex Web UI."
+    }
+  }
+}

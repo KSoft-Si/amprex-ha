@@ -1,9 +1,9 @@
 # amprex for Home Assistant
 
-A community integration that connects Home Assistant (2026.11.0 or newer) to an amprex controller
+A community integration that connects Home Assistant (2026.10.0 or newer) to an amprex controller
 over the controller's own MQTT broker. It installs from the Home Assistant
 [Marketplace](https://www.home-assistant.io/integrations/marketplace/), which replaced HACS in
-2026.11.
+2026.11, or from HACS on 2026.10.
 
 - **State:** system power totals, battery state of charge, the current electricity price,
   service status, and the thermostat (temperatures, targets, holds, away).
@@ -21,6 +21,8 @@ entities appear without a new release of this integration.
    `KSoft-Si/amprex-ha`. Adding a repository from a link needs a GitHub connection; the
    Marketplace asks for it. Open **amprex** and select **Install**. No restart is needed for a
    first install.
+   On Home Assistant 2026.10, add `https://github.com/KSoft-Si/amprex-ha` in HACS as a custom
+   repository (type *Integration*), install **amprex** and restart Home Assistant.
 2. In the amprex Web UI, open **Settings → Home Assistant** and create a connection. Copy the
    pairing code. It is shown only once.
 3. The setup dialog opens after the install (or use the button below, or

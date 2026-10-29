@@ -10,7 +10,7 @@ from homeassistant.components.climate import (
     ClimateEntityFeature,
     HVACMode,
 )
-from homeassistant.const import UnitOfTemperature
+from homeassistant.const import MAJOR_VERSION, MINOR_VERSION, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
@@ -21,6 +21,9 @@ from .entity import AmprexEntity, setup_platform_entities
 from .hub import AmprexHub
 
 _ATTRIBUTE_KEYS = ("source", "zone_id", "hold_id", "active_until", "away_active")
+# Home Assistant 2026.11 renamed the climate temperature API to native_*;
+# 2026.10 knows only the old names. Each version gets the names it uses.
+_NATIVE_TEMPERATURES = (MAJOR_VERSION, MINOR_VERSION) >= (2026, 11)
 
 
 async def async_setup_entry(
@@ -32,7 +35,10 @@ async def async_setup_entry(
 
 
 class AmprexClimate(AmprexEntity, ClimateEntity):
-    _attr_native_temperature_unit = UnitOfTemperature.CELSIUS
+    if _NATIVE_TEMPERATURES:
+        _attr_native_temperature_unit = UnitOfTemperature.CELSIUS
+    else:
+        _attr_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE
     # Comfort control is switched on and off in amprex, not from HA.
     _attr_hvac_modes = [HVACMode.HEAT, HVACMode.OFF]
@@ -50,13 +56,18 @@ class AmprexClimate(AmprexEntity, ClimateEntity):
     def hvac_mode(self) -> HVACMode | None:
         return HVACMode.HEAT if self.value == "heat" else HVACMode.OFF
 
-    @property
-    def native_current_temperature(self) -> float | None:
+    def _current_temperature(self) -> float | None:
         return _float(self.attrs.get("current_temperature"))
 
-    @property
-    def native_target_temperature(self) -> float | None:
+    def _target_temperature(self) -> float | None:
         return _float(self.attrs.get("target_temperature"))
+
+    if _NATIVE_TEMPERATURES:
+        native_current_temperature = property(_current_temperature)
+        native_target_temperature = property(_target_temperature)
+    else:
+        current_temperature = property(_current_temperature)
+        target_temperature = property(_target_temperature)
 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
